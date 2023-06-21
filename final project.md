@@ -213,7 +213,7 @@ for (k in 1:length(sise1_gr)) {
 <details>
   <summary>접기/펼치기</summary>
 
-  ```
+  ```r
 table1_ad <- table1 %>%
   .[, c(1, 2, 6:11)] %>%
   filter(!영업이익 %in% c("", NA))
@@ -226,6 +226,24 @@ table_j <-
 
 ### 종목별 데이터 시각화
 
+1. 영업이익 변수의 밀도 그래프
+
+<details>
+ <summary>접기/펼치기</summary>
+ 
+```r
+ggplot(data = table_j, aes(x = 영업이익)) +
+  geom_density(fill = "steelblue", color = "black") +
+  labs(x = "영업이익", y = "밀도", title = "영업이익 분포") +
+  theme_minimal() +
+  xlim(-1000, 1000)
+
+```
+</details>
+
+<p align="center">
+  <img src="이미지URL">
+</p>
 
 
 
