@@ -252,7 +252,8 @@ ggplot(data = table_j, aes(x = 영업이익)) +
 2. 매출액 변수의 밀도 그래프
    > 오른쪽으로 긴꼬리를 지는 분포의 형태를 보임
 
-   <details>
+<details>
+   
  <summary>접기/펼치기</summary>
  
 ```r
@@ -262,13 +263,13 @@ ggplot(data = table_j, aes(x =매출액)) +
   labs(x = "매출액", y = "밀도", title = "매출액 분포") +
   theme_minimal() +
   xlim(0, 5000)
-
 ```
 </details>
 
 <p align="center">
-  <img src="https://github.com/baedabean/myrepo/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-06-12%20%EC%98%A4%EC%A0%84%209.50.42.png?raw=true)https://github.com/baedabean/myrepo/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-06-12%20%EC%98%A4%EC%A0%84%209.50.42.png?raw=true">
+  <img src="https://github.com/baedabean/myrepo/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-06-12%20%EC%98%A4%EC%A0%84%209.50.53.png?raw=true">
 </p>
 
+- 매출액은 기업의 주된 영업활동에서 발생한 제품, 상품, 용역 등의 총매출액에서 매출할인, 매출환입, 매출에누리 등을 차감한 금액이다.
 
 
