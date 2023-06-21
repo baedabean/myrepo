@@ -272,19 +272,23 @@ ggplot(data = table_j, aes(x =매출액)) +
 
 - 매출액은 기업의 주된 영업활동에서 발생한 제품, 상품, 용역 등의 총매출액에서 매출할인, 매출환입, 매출에누리 등을 차감한 금액이다.
 
+3. 그룹별 매출액 평균
+   > 매출액 평균 상위 30개의 기업만 관찰한다.
 
-```r
-#그룹별 매출액 증가율
-ggplot(data = top_30 , aes(x = 업종명, y = mean_매출액증가율, fill = 업종명)) +
-  stat_summary(fun = "mean",
-               geom = "bar",
-               position = "dodge") +
-  labs(x = "업종명", y = "매출액 증가율", title = "그룹별 매출액 증가율") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
+<details>
+   
+ <summary>접기/펼치기</summary>
+ 
 ```r
 #그룹별 매출액 평균
+
+group_30 <- table_j %>%
+  group_by(업종명) %>%
+  summarize(mean_매출액 = mean(매출액, na.rm = TRUE)) %>% 
+  top_n(30, mean_매출) 
+
+#막대그래프 그리기
+
 ggplot(data = group_30 , aes(x = 업종명, y = mean_매출액, fill = 업종명)) +
   stat_summary(fun = "mean",
                geom = "bar",
@@ -293,10 +297,63 @@ ggplot(data = group_30 , aes(x = 업종명, y = mean_매출액, fill = 업종명
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+</details>
 
+<p align="center">
+  <img src="https://github.com/baedabean/myrepo/blob/main/%EA%B7%B8%EB%A3%B9%EB%B3%84%20%EB%A7%A4%EC%B6%9C%EC%95%A1%20%ED%8F%89%EA%B7%A0.png?raw=true">
+</p>
+
+ - 그룹별 매출액 평균을 봤을 때 가장 높은 매출을 기록하고 있는 업종은 **자동차**임을 확인할 수 있다.
+ - 생명보험의 매출액도 높은 수준으로 관찰되고 그 뒤에 은행과 복합기업순으로 매출액 평균을 기록할 수 있다.
+   
+4. 그룹별 매출액 증가율
+   > 매출액 증가율의 상위 30개의 기업만 관찰한다.
+
+<details>
+   
+ <summary>접기/펼치기</summary>
+ 
+```r
+#그룹별 매출액 증가율
+top_30_f <- table_j %>%
+  group_by(업종명) %>%
+  summarize(mean_매출액증가율 = mean(매출액증가율, na.rm = TRUE)) %>% 
+  top_n(30, mean_매출액증가율) 
+
+#막대그래프 그리기
+ggplot(data = top_30 , aes(x = 업종명, y = mean_매출액증가율, fill = 업종명)) +
+  stat_summary(fun = "mean",
+               geom = "bar",
+               position = "dodge") +
+  labs(x = "업종명", y = "매출액 증가율", title = "그룹별 매출액 증가율") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+</details>
 
+<p align="center">
+  <img src="https://github.com/baedabean/myrepo/blob/main/%EA%B7%B8%EB%A3%B9%EB%B3%84%20%EB%A7%A4%EC%B6%9C%EC%95%A1%20%EC%A6%9D%EA%B0%80%EC%9C%A8.png?raw=true">
+</p>
+
+- 그룹별 매출액 증가율을 봤을 때 **항공사**와 **호텔,레스토랑,레져**산업 매출액이 100% 넘게 증가했다.
+- 이는 코로나19의 영향으로 위축되었던 산업이 펜데믹으로 들어서면서 위 산업이 회복세를 보이고 있음을 확인 할 수 있다.
+- 다른 항목에 비해 **자동차**산업의 성장률이 두드러져 보이진 않지만 **자동차**산업의 매출액 증가율은 약 24%로 높은 수준을 보이고 있다.
+- 매출액 증가율로 짐작할 수 있는 사실은 코로나 19의 영향력에서 벗어나면서 반도체, 천연자원 등의 산업이 회복하고 있음을 볼 수 있다.
+
+5. 그룹별 외국인 평균
+   
+<details>
+   
+ <summary>접기/펼치기</summary>
+ 
+```
 # 그룹별 외국인 평균
+top_30_f <- table_j %>%
+  group_by(업종명) %>%
+  summarize(mean_외국인비율 = mean(외국인비율, na.rm = TRUE)) %>% 
+  top_n(30, mean_외국인비율)
+
+#막대그래프 그리기
 ggplot(data = top_30_f , aes(x = 업종명, y = mean_외국인비율, fill = 업종명)) +
   stat_summary(fun = "mean",
                geom = "bar",
@@ -304,5 +361,14 @@ ggplot(data = top_30_f , aes(x = 업종명, y = mean_외국인비율, fill = 업
   labs(x = "업종명", y = "외국인 비율", title = "그룹별 외국인 비율") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
 
+```
+</details>
+
+
+<p align="center">
+  <img src="https://github.com/baedabean/myrepo/blob/main/%EA%B7%B8%EB%A3%B9%EB%B3%84%20%EC%99%B8%EA%B5%AD%EC%9D%B8%20%EB%B9%84%EC%9C%A8.png?raw=true">
+</p>
+
+- 외국인 비율 역시 **자동차**분야가 약 26%로 높은 비율 관계를 보여줬다.
+- 가장 높은 외국인 비율을 44%인 담배인데, 담배는 기업이 독점적으로 운영해 1개의 기업만 존재한다.
