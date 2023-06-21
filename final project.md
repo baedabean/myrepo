@@ -117,6 +117,11 @@ sise1_gr <- paste0("https://finance.naver.com", sise_gr)
 </details>
 
 ** 매출액, 영업이익, 당기순이익, 주당순이익, 매출액증가율, 유보율 테이블 만들기 **
+
+<details>
+
+ <summary>접기/펼치기</summary>
+
 ```r
 # table2 <- c()
 for (k in 1:length(sise1_gr)) {
@@ -216,7 +221,11 @@ table1_ad <- table1 %>%
 table_j <-
   as.data.frame(lapply(table1_ad, function(x)
     gsub(",", "", x))) # ,를 지우지 않으면 숫자로 인식을 못함.
-
+```
 </details>
+
+### 종목별 데이터 시각화
+
+
 
 
