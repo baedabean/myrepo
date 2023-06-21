@@ -273,3 +273,36 @@ ggplot(data = table_j, aes(x =매출액)) +
 - 매출액은 기업의 주된 영업활동에서 발생한 제품, 상품, 용역 등의 총매출액에서 매출할인, 매출환입, 매출에누리 등을 차감한 금액이다.
 
 
+```r
+#그룹별 매출액 증가율
+ggplot(data = top_30 , aes(x = 업종명, y = mean_매출액증가율, fill = 업종명)) +
+  stat_summary(fun = "mean",
+               geom = "bar",
+               position = "dodge") +
+  labs(x = "업종명", y = "매출액 증가율", title = "그룹별 매출액 증가율") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```r
+#그룹별 매출액 평균
+ggplot(data = group_30 , aes(x = 업종명, y = mean_매출액, fill = 업종명)) +
+  stat_summary(fun = "mean",
+               geom = "bar",
+              position = "dodge") +
+  labs(x = "업종명", y = "매출액", title = "그룹별 매출액 평균") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```
+
+# 그룹별 외국인 평균
+ggplot(data = top_30_f , aes(x = 업종명, y = mean_외국인비율, fill = 업종명)) +
+  stat_summary(fun = "mean",
+               geom = "bar",
+               position = "dodge") +
+  labs(x = "업종명", y = "외국인 비율", title = "그룹별 외국인 비율") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
