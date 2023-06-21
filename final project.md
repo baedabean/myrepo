@@ -227,7 +227,7 @@ table_j <-
 ### 종목별 데이터 시각화
 
 1. 영업이익 변수의 밀도 그래프
-
+   > 완벽한 대칭은 아니지만 평균을 중심으로 대칭성을 보임
 <details>
  <summary>접기/펼치기</summary>
  
@@ -242,7 +242,32 @@ ggplot(data = table_j, aes(x = 영업이익)) +
 </details>
 
 <p align="center">
-  <img src="이미지URL">
+  <img src="https://github.com/baedabean/myrepo/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-06-12%20%EC%98%A4%EC%A0%84%209.50.42.png?raw=true)https://github.com/baedabean/myrepo/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-06-12%20%EC%98%A4%EC%A0%84%209.50.42.png?raw=true">
+</p>
+
+ - 영업이익(EBIT:Earning before interest and taxes)은 매출총익에서 판매관리비를 뺀 것이다. 기업이 경영하는 주된 사업의 수익성을 나타낸다. 즉, 영업활동을 통해 순수하게 남은 이익을 말한다.
+ - 영업이익 = 매출액-매출원가-판매관리비
+ - 판매관리비는 상품의 판매활동비나 기업의 유지 관리를 위해 지출된 비용을 말하며 인건비와 세금, 인건비와 세금, 공과금, 감가상각비, 광고비 등이 있다.
+
+2. 매출액 변수의 밀도 그래프
+   > 오른쪽으로 긴꼬리를 지는 분포의 형태를 보임
+
+   <details>
+ <summary>접기/펼치기</summary>
+ 
+```r
+# 매출액 변수의 밀도 그래프
+ggplot(data = table_j, aes(x =매출액)) +
+  geom_density(fill = "steelblue", color = "black") +
+  labs(x = "매출액", y = "밀도", title = "매출액 분포") +
+  theme_minimal() +
+  xlim(0, 5000)
+
+```
+</details>
+
+<p align="center">
+  <img src="https://github.com/baedabean/myrepo/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-06-12%20%EC%98%A4%EC%A0%84%209.50.42.png?raw=true)https://github.com/baedabean/myrepo/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-06-12%20%EC%98%A4%EC%A0%84%209.50.42.png?raw=true">
 </p>
 
 
