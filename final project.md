@@ -451,6 +451,7 @@ ggplot(data = top_30_f , aes(x = 업종명, y = mean_외국인비율, fill = 업
 ### 자동차 산업의 시계열 관찰
 
 1. 국내 상장된 자동차 기업
+- 2023.06월 기준
 
 | 종목명 | 시가총액 | 매출액 | 자산총계 | 외국인비율 | 유보율 |
 |----- |-----   | -----| ----- | ----- | ----- |
@@ -464,6 +465,142 @@ ggplot(data = top_30_f , aes(x = 업종명, y = mean_외국인비율, fill = 업
 |기아          | 335,305|865,590 |  737,110      |37.46 |1,779.0|
 |현대차         |427,294 |1,425,275| 2,557,425      |32.36| 5,654.5|
 
-2. 
+2. 자동차 산업 평균 매출액, 영업이익, 영업이익률 그래프
+- 2020.12, 2021.12, 2022.12 3개의 연도에 대한 시계열 자료를 확인한다.
 
+<details>
+<summary>데이터 수집/전처리/그래프</summary>
+ 
+```r
+# 기업의 실적분석 table을 수집하는 함수
+perf_table <- function(code) {
+  base_url <- "https://finance.naver.com/item/main.naver?code="
+  url <- paste0(base_url, code)
+  
+  table <- read_html(url, encoding = "euc-kr") %>%
+    html_nodes("table.tb_type1.tb_num") %>%
+    html_table()
+  
+  table1 <- as.data.frame(table[[1]])
+  table2 <- table1[-c(1, 2),]
+  
+  # Replace commas with spaces and convert to numeric
+  table3 <-
+    data.frame(matrix(ncol = ncol(table2), nrow = nrow(table2)))
+  
+  for (i in 2:ncol(table2)) {
+    table3[, i - 1] <- gsub(",", "", table2[, i]) %>%
+      as.numeric()
+  }
+  
+  rownames(table3) <-
+    c(
+      "매출액",
+      "영업이익",
+      "당기순이익",
+      "영업이익률",
+      "순이익률",
+      "ROE(지배주주)",
+      "부채비율",
+      "당좌비율",
+      "유보율",
+      "EPS(원)",
+      "PER(배)",
+      "BPS(원)",
+      "PBR(배)",
+      "주당배당금(원)",
+      "시가배당률",
+      "배당성향"
+    )
+  colnames(table3) <-
+    c(
+      "2020.12",
+      "2021.12",
+      "2022.12",
+      "2023.12(E)",
+      "2022.03",
+      "2022.06",
+      "2022.09",
+      "2022.12",
+      "2023.03",
+      "2023.06(E)"
+    )
+  
+  return(table3)
+}
+}
 
+```
+
+```r
+# 900140(엘브이엠씨홀딩스), 000040(KR모터스), 003620(KG모빌리티), 000270(기아), 005380(현대차)
+code <- c("900140", "000040", "003620", "000270", "005380")
+
+table <- rbind(
+  perf_table(code[1]),
+  perf_table(code[2]),
+  perf_table(code[3]),
+  perf_table(code[4]),
+  perf_table(code[5])
+)
+# view(table)
+
+매출액 <- table[seq(1, 80, 16), ]
+영업이익 <- table[seq(2, 80, 16),]
+영업이익률 <- table[seq(4, 80, 16), ]
+부채비율 <- table[seq(7, 80, 16), ]
+
+mean_매출액 <- colMeans(매출액, na.rm = TRUE) %>%
+  .[1:3]
+mean_영업이익 <- colMeans(영업이익, na.rm = TRUE) %>%
+  .[1:3]
+mean_영업이익률 <- colMeans(영업이익률, na.rm = TRUE) %>%
+  .[1:3]
+mean_부채비율 <- colMeans(부채비율, na.rm = TRUE) %>%
+  .[1:3]
+time <- c("2020.12", "2021.12", "2022.12")
+
+data <- data.frame(
+  time = c("2020.12", "2021.12", "2022.12"),
+  mean_매출액 = mean_매출액,
+  mean_영업이익 = mean_영업이익,
+  mean_영업이익률 = mean_영업이익률,
+  mean_부채비율 = mean_부채비율
+)
+```
+ 
+```r
+# 자동차 산업 평균 매출액 그래프 (2020~2022)
+plot1 <- ggplot(data) +
+  geom_point(aes(x = time, y = mean_매출액), size = 3) +
+  geom_line(aes(x = time, y = mean_매출액, group = 1)) +
+  labs(x = "Year", y = "Mean Value") +
+  ggtitle("자동차 산업 매출액 평균") +
+  theme(text = element_text(family = "NanumGothic"))
+
+# 자동차 산업 평균 영업이익 그래프 (2020~2022)
+plot2 <- ggplot(data) +
+  geom_point(aes(x = time, y = mean_영업이익), size = 3) +
+  geom_line(aes(x = time, y = mean_영업이익, group = 1)) +
+  labs(x = "Year", y = "Mean Value") +
+  ggtitle("자동차 산업 영업이익 평균") +
+  theme(text = element_text(family = "NanumGothic"))
+
+# 자동차 산업 평균 영업이익률 그래프 (2020~2022)
+plot3 <- ggplot(data) +
+  geom_point(aes(x = time, y = mean_영업이익률), size = 3) +
+  geom_line(aes(x = time, y = mean_영업이익률, group = 1)) +
+  labs(x = "Year", y = "Mean Value", color = "Variable") +
+  ggtitle("자동차 산업 영업이익률 평균") +
+  theme(text = element_text(family = "NanumGothic"))
+
+# library(gridExtra)
+grid.arrange(plot1, plot2, plot3, ncol = 3)
+
+```
+
+</details>
+
+<p align="center">
+  <img src="https://github.com/baedabean/myrepo/blob/main/%EA%B7%B8%EB%A3%B9%EB%B3%84%20%EC%99%B8%EA%B5%AD%EC%9D%B8%20%EB%B9%84%EC%9C%A8.png?raw=true">
+</p>
