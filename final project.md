@@ -602,5 +602,12 @@ grid.arrange(plot1, plot2, plot3, ncol = 3)
 </details>
 
 <p align="center">
-  <img src="https://github.com/baedabean/myrepo/blob/main/%EA%B7%B8%EB%A3%B9%EB%B3%84%20%EC%99%B8%EA%B5%AD%EC%9D%B8%20%EB%B9%84%EC%9C%A8.png?raw=true">
+  <img src="https://github.com/baedabean/myrepo/blob/main/Rplot07.png?raw=true">
 </p>
+
+- 코로나 19직후 자동차 산업은 매출액이 저조한 모습을 보인다.
+- 영업이익뿐만 아니라 영업이익증가율은 -1.53을 기록하며 적자를 맞이했다.
+- 하지만 펜데믹과 함께 무역리스크가 해결됨과 함께 매출액과 영업이익률이 회복하는 모습을 보여 자동차 산업은 코로나19의 영향을 직격탄으로 받은 산업이라고 볼 수 있다.
+
+
+  
